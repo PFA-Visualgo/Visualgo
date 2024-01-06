@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>👩🏻‍💻 Visualgo - Visualise Data Structure</title>
+    <script type="module" src="https://pyscript.net/releases/2024.1.1/core.js"></script>
+    <link rel="stylesheet" href="index.css">
+
+</head>
+
+<body>
+
+    <!-- <body>
+        <h1>Polyglot 🦜 💬 🇬🇧 ➡️ 🏴‍☠️</h1>
+        <p>Translate English into Pirate speak...</p>
+        <input type="text" name="english" id="english" placeholder="Type English here..." />
+        <button py-click="translate_english">Translate</button>
+        <div id="output"></div>
+        <script type="py" src="./main.py" config="./pyscript.json"></script>
+    </body> -->
+
+    <div class="container" id="executionSection">
+        <button id="importFileButton" onclick="importFile()">Import File</button>
+        <button id="selectFunctionsButton" onclick="selectFunctions()"> Select
+            Functions <br> Calls to track</button>
+        <button id="selectVariablesButton" onclick="selectVariables()">Select
+            Variables <br>to show</button>
+        <button id="restartButton" onclick="start()"> Start </button>
+        <button id="pauseButton" onclick="pause()"> Pause </button>
+        <input type="number" id="stepInput" placeholder="Step (ms)" />
+        <div class="container-vertical" id="speedSection">
+            <button id="stepBackwardButton" onclick="stepBackward()">Step
+                Backward</button>
+            <button id="nextBackwardButton" onclick="nextStepBackward()">Next
+                Backward</button>
+        </div>
+        <div class="container-vertical" id="speedSection">
+            <button id="stepForwardButton" onclick="stepForward()">Step
+                Forward</button>
+            <button id="nextForwardButton" onclick="nextStepForward()">Next
+                Forward</button>
+        </div>
+    </div>
+    <textarea id="codeEditor" placeholder="Type your Python code here..."></textarea>
+    <div id="drawingArea">Drawing Area</div>
+
+    <script>
+        function importFile() {
+            alert("Importing file");
+        }
+
+        function pause() {
+            let element = document.getElementById("pauseButton");
+            if (element.innerText == "Pause") {
+                element.innerText = "Resume";
+            } else {
+                element.innerText = "Pause";
+            }
+        }
+
+        function start() {
+            let element = document.getElementById("restartButton");
+            if (element.innerText == "Start") {
+                element.innerText = "Restart";
+            } else {
+                element.innerText = "Start";
+            }
+        }
+        function executeCode() {
+            alert("Executing Python code:\n" + document.getElementById('codeEditor').value);
+        }
+
+    </script>
+
+
+</body>
+
+</html>
