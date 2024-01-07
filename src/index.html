@@ -4,77 +4,76 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>👩🏻‍💻 Visualgo - Visualise Data Structure</title>
-    <script type="module" src="https://pyscript.net/releases/2024.1.1/core.js"></script>
+    <title>Visualgo - Visualise Data Structure</title>
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👩🏻‍💻</text></svg>">
+
+
+    <!-- include page javascript -->
+    <script src="index-preloading.js"></script>
+
+    <!-- include page styling -->
     <link rel="stylesheet" href="index.css">
+
+    <!-- include pyscript for running python code in the front end -->
+    <!-- <link rel="stylesheet" href="https://pyscript.net/releases/2024.1.1/core.css" /> -->
+    <script type="module" src="https://pyscript.net/releases/2023.11.1/core.js"></script>
+
+    <!-- include CodeMirror for code text input, autocompletion and highlighting  -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.3/codemirror.min.css">
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.3/codemirror.min.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.3/mode/python/python.min.js"></script>
+
+    <!-- styling change as needed -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.3/theme/dracula.min.css">
 
 </head>
 
 <body>
 
-    <!-- <body>
+    <!--
         <h1>Polyglot 🦜 💬 🇬🇧 ➡️ 🏴‍☠️</h1>
         <p>Translate English into Pirate speak...</p>
         <input type="text" name="english" id="english" placeholder="Type English here..." />
         <button py-click="translate_english">Translate</button>
         <div id="output"></div>
         <script type="py" src="./main.py" config="./pyscript.json"></script>
-    </body> -->
+    -->
 
     <div class="container" id="executionSection">
-        <button id="importFileButton" onclick="importFile()">Import File</button>
-        <button id="selectFunctionsButton" onclick="selectFunctions()"> Select
-            Functions <br> Calls to track</button>
-        <button id="selectVariablesButton" onclick="selectVariables()">Select
-            Variables <br>to show</button>
-        <button id="restartButton" onclick="start()"> Start </button>
-        <button id="pauseButton" onclick="pause()"> Pause </button>
-        <input type="number" id="stepInput" placeholder="Step (ms)" />
-        <div class="container-vertical" id="speedSection">
-            <button id="stepBackwardButton" onclick="stepBackward()">Step
-                Backward</button>
-            <button id="nextBackwardButton" onclick="nextStepBackward()">Next
-                Backward</button>
+        <div class="container-vertical">
+            <button id="importFileButton" onclick="importFile()">Import File</button>
+            <button id="saveFileButton" onclick="saveFile()">Save File</button>
         </div>
-        <div class="container-vertical" id="speedSection">
-            <button id="stepForwardButton" onclick="stepForward()">Step
-                Forward</button>
-            <button id="nextForwardButton" onclick="nextStepForward()">Next
-                Forward</button>
+        <button id="selectFunctionsButton" py-click="selectFunctions"> Select Functions <br> Calls
+            to track</button>
+        <button id="selectVariablesButton" py-click="selectVariables">Select Variables <br>to
+            show</button>
+        <button id="restartButton" py-click="start"> Start </button>
+        <button id="pauseButton" py-click="pause"> Pause </button>
+        <input type="text" id="stepInput" placeholder="500 (Steps in ms)"
+            oninput="updateInputValue(this)" max="10000" />
+        <div class="container-vertical">
+            <button id="stepBackwardButton" py-click="stepBackward">Step Backward</button>
+            <button id="nextBackwardButton" py-click="nextStepBackward">Next Backward</button>
+        </div>
+        <div class="container-vertical">
+            <button id="stepForwardButton" py-click="stepForward">Step Forward</button>
+            <button id="nextForwardButton" py-click="nextStepForward">Next Forward</button>
         </div>
     </div>
+
     <textarea id="codeEditor" placeholder="Type your Python code here..."></textarea>
+
     <div id="drawingArea">Drawing Area</div>
 
-    <script>
-        function importFile() {
-            alert("Importing file");
-        }
+    <script src="index.js"></script>
 
-        function pause() {
-            let element = document.getElementById("pauseButton");
-            if (element.innerText == "Pause") {
-                element.innerText = "Resume";
-            } else {
-                element.innerText = "Pause";
-            }
-        }
-
-        function start() {
-            let element = document.getElementById("restartButton");
-            if (element.innerText == "Start") {
-                element.innerText = "Restart";
-            } else {
-                element.innerText = "Start";
-            }
-        }
-        function executeCode() {
-            alert("Executing Python code:\n" + document.getElementById('codeEditor').value);
-        }
-
-    </script>
-
-
+    <script type="py" src="./main.py" config="./pyscript.json"></script>
 </body>
 
 </html>
