@@ -1,18 +1,23 @@
-import arrr
-from pyscript import document
+# from pathlib import Path
+# import sys
 
-def translate_english(event):
-    input_text = document.querySelector("#english")
-    english = input_text.value
-    output_div = document.querySelector("#output")
-    output_div.innerText = arrr.translate(english)
+# path_root = Path(__file__).parents[2]
+# sys.path.append(str(path_root))
+# print(sys.path)
+
+# import pydebuger
+
+from pyscript import document
+from js import editor
+
+def getScriptCode():
+    text = editor.getValue();
+    return text
 
 def selectFunctions(event):
-    # Implement the logic for the Select Functions button
     pass
 
 def selectVariables(event):
-    # Implement the logic for the Select Variables button
     pass
 
 def start(event):
@@ -37,19 +42,19 @@ def pause(event):
     pass
 
 def stepBackward(event):
-    # Implement the logic for the Step Backward button
     pass
 
 def nextStepBackward(event):
-    # Implement the logic for the Next Step Backward button
     pass
 
 def stepForward(event):
-    # Implement the logic for the Step Forward button
+    res = getScriptCode()
+    output_div = document.querySelector("#drawingArea")
+    output_div.innerText = res
+     # pydebuger.runLineOfCode("print('Hello World')")
     pass
 
 def nextStepForward(event):
-    # Implement the logic for the Next Step Forward button
     pass
 
 

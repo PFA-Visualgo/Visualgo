@@ -2,7 +2,9 @@
 var editor = CodeMirror.fromTextArea(document.getElementById('codeEditor'), {
     mode: 'python', // Set the mode to Python
     lineNumbers: true, // Display line numbers
+    scrollbarStyle: 'null', // Hide the scrollbars
     indentUnit: 4, // Set the number of spaces for each indent
+    position: 'absolute',
     extraKeys: {
         'Ctrl-Space': 'autocomplete' // Enable autocomplete on Ctrl + Space
     },
