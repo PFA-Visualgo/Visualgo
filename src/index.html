@@ -62,17 +62,17 @@
                 to track</button>
             <button id="selectVariablesButton" py-click="selectVariables">Select Variables <br>to
                 show</button>
-            <button id="restartButton" py-click="start"> Start </button>
+            <button id="startButton" py-click="start"> Start </button>
             <button id="pauseButton" py-click="pause"> Pause </button>
-            <input type="text" id="stepInput" placeholder="500 (Steps in ms)"
-                oninput="updateInputValue(this)" max="10000" />
+            <input type="text" id="stepInput" placeholder="1000 (Steps in ms)"
+                oninput="checkTimeStepValue(this)" max="10000" />
             <div class="container-vertical">
                 <button id="stepBackwardButton" py-click="stepBackward">Step Backward</button>
-                <button id="nextBackwardButton" py-click="nextStepBackward">Next Backward</button>
+                <button id="nextBackwardButton" py-click="nextBackward">Next Backward</button>
             </div>
             <div class="container-vertical">
                 <button id="stepForwardButton" py-click="stepForward">Step Forward</button>
-                <button id="nextForwardButton" py-click="nextStepForward">Next Forward</button>
+                <button id="nextForwardButton" py-click="nextForward">Next Forward</button>
             </div>
         </div>
         <div id="codeEditorContainer">
