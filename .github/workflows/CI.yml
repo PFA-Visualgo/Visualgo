@@ -10,7 +10,7 @@ on:
   pull_request:
     branches: [ "master", "dev"]
 
-  # Allows you to run this workflow manually from the Actions tab
+  # Allows you to run this workflow manually from the Actions tab, only possible if this file is in the default branch (aka master)
   workflow_dispatch:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
