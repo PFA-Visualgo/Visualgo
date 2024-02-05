@@ -8,7 +8,7 @@ on:
   # push:
   #   branches: [ "master" ]
   pull_request:
-    branches: [ "master", "dev"]
+    branches: [ "dev"]
 
   # Allows you to run this workflow manually from the Actions tab, only possible if this file is in the default branch (aka master)
   workflow_dispatch:
