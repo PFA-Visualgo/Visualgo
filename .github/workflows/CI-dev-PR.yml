@@ -116,16 +116,10 @@ jobs:
 
       - name: Update commit status
         run: |
-          # Extract the commit SHA from the GITHUB_SHA environment variable
-          COMMIT_SHA=${GITHUB_SHA}
-          GIT_TOKEN=${GITHUB_TOKEN}
-          echo "Commit SHA: $COMMIT_SHA"
-          echo "GitHub Token: $GIT_TOKEN"
-
           # Use the GitHub Status API to update the commit status
           curl -L \
             -H "Accept: application/vnd.github+json" \
-            -H "Authorization: Bearer ${GITHUB_TOKEN}" \
+            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
             -d '{"state": "success", "description": "All dev checks passed", "context": "ci/all-checks-dev"}' \
             https://api.github.com/repos/OWNER/REPO/commits/REF/status
