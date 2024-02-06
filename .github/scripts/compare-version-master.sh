@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Get the version number of the last commit on the master branch
-MASTER_VERSION=$(git show master:pyproject.toml | grep -E '^\s*version\s*=\s*"[0-9]+\.[0-9]+\.[0-9]+"' | awk -F '"' '{print $2}')
+MASTER_VERSION=$(git show origin/master:pyproject.toml | grep -E '^\s*version\s*=\s*"[0-9]+\.[0-9]+\.[0-9]+"' | awk -F '"' '{print $2}')
 # TODO use correct master path
 
 
