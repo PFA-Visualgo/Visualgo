@@ -120,7 +120,7 @@ jobs:
           COMMIT_SHA=${GITHUB_SHA}
           GIT_TOKEN=${GITHUB_TOKEN}
           echo "Commit SHA: $COMMIT_SHA"
-          echo "GitHub Token: $GIT_TOKEN
+          echo "GitHub Token: $GIT_TOKEN"
 
           # Use the GitHub Status API to update the commit status
           curl -L \
