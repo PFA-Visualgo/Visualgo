@@ -84,29 +84,7 @@ jobs:
       - name: Run tests
         run: echo "python -m  pytest"
 
-  # # This workflow contains a single job called "build"
-  # build:
-  #   name: Build
-
-  #   # The type of runner that the job will run on
-  #   runs-on: ubuntu-latest
-
-  #   # Steps represent a sequence of tasks that will be executed as part of the job
-  #   steps:
-  #     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-  #     - uses: actions/checkout@v4
-
-  #     # # Runs a single command using the runners shell
-  #     # - name: Run a one-line script
-  #     #   run: echo Hello, world!
-
-  #     # Runs a set of commands using the runners shell
-  #     - name: Run a multi-line script
-  #       run: |
-  #         echo Add other actions to build,
-  #         echo test, and deploy your project.
-
-  update-status:
+  update-commit-status:
     name: Update Commit Status
     needs: [static-analysis, build, tests]
     runs-on: ubuntu-latest
@@ -114,17 +92,24 @@ jobs:
       - name: All previous jobs succeeded
         run: echo "All jobs succeeded!"
 
-      - name: Update commit status
+      - name: Set status checks
         run: |
-          # Extract the commit SHA from the GITHUB_SHA environment variable
-          COMMIT_SHA=${GITHUB_SHA}
+          # Set a success status check
+          echo "::set-output name=DEV_PR_CHECK_STATUS::success"
 
-          # https://michaelheap.com/ultimate-guide-github-actions-authentication/
+        id: set-check-status
 
-          # Use the GitHub Status API to update the commit status
-          curl -L \
-            -H "Accept: application/vnd.github+json" \
-            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-            -H "X-GitHub-Api-Version: 2022-11-28" \
-            -d '{"state": "success dev PR", "description": "All dev checks passed", "context": "ci/all-checks-dev"}' \
-            https://api.github.com/repos/PFA-Visualgo/Visualgo/commits/$COMMIT_SHA/status
+      # - name: Update commit status
+      #   run: |
+      #     # Extract the commit SHA from the GITHUB_SHA environment variable
+      #     COMMIT_SHA=${GITHUB_SHA}
+
+      #     # https://michaelheap.com/ultimate-guide-github-actions-authentication/
+
+      #     # Use the GitHub Status API to update the commit status
+      #     curl -L \
+      #       -H "Accept: application/vnd.github+json" \
+      #       -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+      #       -H "X-GitHub-Api-Version: 2022-11-28" \
+      #       -d '{"state": "success dev PR", "description": "All dev checks passed", "context": "ci/all-checks-dev"}' \
+      #       https://api.github.com/repos/PFA-Visualgo/Visualgo/commits/$COMMIT_SHA/status
