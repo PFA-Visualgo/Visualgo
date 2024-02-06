@@ -82,7 +82,7 @@ jobs:
           echo "pip install requirements.txt"
 
       - name: Run tests
-        run: echo "python -m pytest"
+        run: echo "python -m  pytest"
 
   # # This workflow contains a single job called "build"
   # build:
