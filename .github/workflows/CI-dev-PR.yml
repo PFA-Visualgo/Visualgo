@@ -18,37 +18,23 @@ jobs:
   # This workflow contains a single job called "build"
 
   create-commit-status:
-    name: Update Commit Status
-    needs: [static-analysis, build, tests]
+    name: Create Commit Status
     runs-on: ubuntu-latest
     steps:
-      - name: All previous jobs succeeded
-        run: echo "All jobs succeeded!"
-
-      # - name: Set status checks
-      #   run: |
-      #     # Set a success status check
-      #     echo "::set-output name=DEV_PR_CHECK_STATUS::success"
-
-      #   id: set-check-status
-
-      - name: Update commit check
+      - name: Create commit check
         run: |
-          # Extract the commit SHA from the GITHUB_SHA environment variable
-          COMMIT_SHA=${GITHUB_SHA}
-
           curl -L \
             -X POST \
             -H "Accept: application/vnd.github+json" \
             -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
             https://api.github.com/repos/PFA-Visualgo/Visualgo/check-runs \
-            -d '{"name":"success dev PR","head_sha":"$COMMIT_SHA","status":"in_progress","conclusion":"success","output":{"title":"All dev checks passed","summary":"All dev checks passed","text":"All dev checks passed"}}'
+            -d '{"name":"success dev PR","head_sha":"${{ GITHUB_SHA }}","status":"in_progress","conclusion":"success","output":{"title":"All dev checks passed","summary":"All dev checks passed","text":"All dev checks passed"}}'
 
 
   static-analysis:
     name: Static Analysis
-
+    needs: [create-commit-status]
     runs-on: ubuntu-latest
 
     steps:
@@ -71,7 +57,7 @@ jobs:
 
   build:
     name: Build
-    needs: [static-analysis]
+    needs: [create-commit-status, static-analysis]
 
     runs-on: ubuntu-latest
 
@@ -93,7 +79,7 @@ jobs:
 
   tests:
     name: Tests
-    needs: [static-analysis, build]
+    needs: [create-commit-status, static-analysis, build]
 
     runs-on: ubuntu-latest
 
@@ -115,11 +101,9 @@ jobs:
 
   update-commit-status:
     name: Update Commit Status
-    needs: [static-analysis, build, tests]
+    needs: [create-commit-status, static-analysis, build, tests]
     runs-on: ubuntu-latest
     steps:
-      - name: All previous jobs succeeded
-        run: echo "All jobs succeeded!"
 
       # - name: Set status checks
       #   run: |
@@ -130,16 +114,13 @@ jobs:
 
       - name: Update commit check
         run: |
-          # Extract the commit SHA from the GITHUB_SHA environment variable
-          COMMIT_SHA=${GITHUB_SHA}
-
           curl -L \
             -X POST \
             -H "Accept: application/vnd.github+json" \
             -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
             https://api.github.com/repos/PFA-Visualgo/Visualgo/check-runs \
-            -d '{"name":"success dev PR","head_sha":"$COMMIT_SHA","status":"completed","conclusion":"success","output":{"title":"All dev checks passed","summary":"All dev checks passed","text":"All dev checks passed"}}'
+            -d '{"name":"success dev PR","head_sha":"${{ GITHUB_SHA }}","status":"completed","conclusion":"success","output":{"title":"All dev checks passed","summary":"All dev checks passed","text":"All dev checks passed"}}'
 
       # - name: Update commit status
       #   run: |
