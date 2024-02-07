@@ -32,11 +32,10 @@ jobs:
         run: ./.github/scripts/compare-version-master.sh
 
       - name: Checks if version matches current Paris date
-        run: ./.github/scripts/compare-version-date.h
+        run: ./.github/scripts/compare-version-date.sh
 
   static-analysis:
     name: Static Analysis
-    needs: version-analysis
 
     runs-on: ubuntu-latest
 
@@ -44,7 +43,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.9'
 
@@ -68,7 +67,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.9'
 
@@ -90,7 +89,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.9'
 
@@ -103,14 +102,14 @@ jobs:
         run: echo "python -m pytest"
 
   integration-tests:
-    name: Integration tests
+    name: Integration Tests
     needs: [version-analysis, static-analysis, build, unit-tests]
 
     runs-on: ubuntu-latest
 
     steps:
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.9'
 
