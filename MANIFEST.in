@@ -1,1 +1,1 @@
-recursive-exclude dir-pattern docs src/ui tst
+recursive-exclude dir-pattern docs src/ui tests

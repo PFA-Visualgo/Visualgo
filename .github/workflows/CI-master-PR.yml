@@ -80,7 +80,7 @@ jobs:
       - name: Build package
         run: python -m build
 
-  tests:
+  unit-tests:
     name: Tests
     needs: [version-analysis, static-analysis, build]
 
@@ -102,23 +102,22 @@ jobs:
       - name: Run tests
         run: echo "python -m pytest"
 
-  update-status:
-    name: Update Commit Status
-    needs: [version-analysis, static-analysis, build, tests]
+  integration-tests:
+    name: Integration tests
+    needs: [version-analysis, static-analysis, build, unit-tests]
+
     runs-on: ubuntu-latest
+
     steps:
-      - name: All previous jobs succeeded
-        run: echo "All jobs succeeded!"
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
 
-      - name: Update commit status
+      - name: Install dependencies
         run: |
-          # Extract the commit SHA from the GITHUB_SHA environment variable
-          COMMIT_SHA=${GITHUB_SHA}
+          python -m pip install --upgrade pip
+          echo "pip install requirements.txt"
 
-          # Use the GitHub Status API to update the commit status
-          curl -L \
-            -H "Accept: application/vnd.github+json" \
-            -H "Authorization: Bearer ${GITHUB_TOKEN}" \
-            -H "X-GitHub-Api-Version: 2022-11-28" \
-            -d '{"state": "success", "description": "All master checks passed", "context": "ci/all-checks-master"}' \
-            https://api.github.com/repos/OWNER/REPO/commits/REF/status
+      - name: Run tests
+        run: echo "python ./tests/integration_tests.py"
