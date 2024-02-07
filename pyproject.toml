@@ -7,7 +7,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "visualgo"
-version = "2024.2.4"
+version = "2024.2.7"
 description = "Enjoy classic datatype and run python code"
 readme = "README.md"
 authors = [{ name = "PFA-Visualgo" }]

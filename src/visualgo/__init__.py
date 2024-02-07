@@ -1,4 +1,4 @@
 # __init__.py
 
 # Version of the visualgo package
-__version__ = "2024.2.4"
+__version__ = "2024.2.7"

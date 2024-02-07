@@ -30,6 +30,9 @@ jobs:
           fetch-depth: 0
 
       # Runs a single command using the runners shell
+      - name: Check if versions are coherents in commit
+        run: ./.github/scripts/compare-versions-in-commit.sh
+
       - name: Checks if different version than master
         run: ./.github/scripts/compare-version-master.sh
 
