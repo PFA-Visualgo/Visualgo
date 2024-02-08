@@ -32,7 +32,7 @@ class TestNode(unittest.TestCase):
 
     def test_set(self):
         """
-        Tests the assignment to a value of a node
+        Tests the assignment to a value of a node :
         -Different types of value
         -Stability of children
         """
