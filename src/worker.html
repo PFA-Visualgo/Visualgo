@@ -15,35 +15,45 @@
 
             deferred = Promise.withResolvers()
 
-            # resolve the promise with the input value
-            def handle_result(event):
-              inputs = document.querySelectorAll('input')
-              inputs[0].disabled = True
-              inputs[1].disabled = True
-              deferred.resolve(inputs[0].value)
+            def handle_increment(event):
+                global deferred
+                button = document.getElementById("incr")
+                button.disabled = True
+                deferred.resolve()
+                deferred = Promise.withResolvers()
 
             # allows the worker to ask something as placeholder
             # resolves the returning on micropython-click event
             # non-blocking this thread, keeping the worker in idle
             # until such promise is not resolved
-            def handle_input(placeholder):
-              inputs = document.querySelectorAll('input')
-              inputs[0].placeholder = placeholder
-              inputs[0].disabled = False
-              inputs[1].disabled = False
+            def handle_cpt(newVal):
+              button = document.getElementById("incr")
+              button.disabled = False
+              cptDiv = document.getElementById("cpt")
+              cptDiv.textContent = str(newVal)
               return deferred.promise
 
             w = XWorker('./worker.py')
 
             # provide a synchronous input callback
             # to the polyscript's xworker utility
-            w.sync.input = handle_input
+            w.sync.count = handle_cpt
         </script>
-        <input type="text" placeholder="loading ..." required disabled />
-        <input
-            type="submit"
-            pyodide-click="handle_result"
-            disabled
-        />
+        <button pyodide-click="handle_increment" disabled id="incr">Increment</button>
+        <div id="cpt">loading...</div>
+
+<!-- this is only to test the non-blocking behavior -->
+        <script>
+          addEventListener('DOMContentLoaded', () => {
+            const div = document.body.appendChild(
+              document.createElement('div')
+            );
+            (function monitor() {
+              const date = new Date;
+              div.textContent = `${date.getSeconds()}.${date.getMilliseconds()}`;
+              requestAnimationFrame(monitor);
+            }());
+          });
+        </script>
 </body>
 </html>
