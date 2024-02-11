@@ -1,5 +1,5 @@
 import pydebuger
-import inspect
+from polyscript import xworker
 
 def main():
 	debug = pydebuger.MyBdb()
@@ -25,6 +25,7 @@ if __name__ == "__main__":
 		debug.set_break(debug.canonic("test.py"), 1)
 		debug.run(cmd, {"__file__": debug.canonic("test.py"), "__name__": "__main__"})
 		print("HELLO")
+
 
 if __name__ == "__main__":
 	main()
