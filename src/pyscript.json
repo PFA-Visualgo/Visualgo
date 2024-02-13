@@ -1,5 +1,5 @@
 {
     "files": {
-        "./pydebuger.py": "./pydebuger.py"
+        "./pyscript_mylib.py": "./mylib.py"
     }
 }
