@@ -1,24 +1,20 @@
-name: CI-dev-PR
-
-# https://docs.github.com/en/actions/using-jobs/using-jobs-in-a-workflow
+name: CI-PR
 
 # Controls when the workflow will run
 on:
-  # Triggers the workflow on pull request events but only for the "dev" branch
+  # Triggers the workflow on pull request events but only for the "master" branch
   pull_request:
-    branches: ["dev"]
-
+    branches: ["dev", "master"]
   # Allows you to run this workflow manually from the Actions tab, only possible if this file is in the default branch (aka master)
   workflow_dispatch:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
 
-  # Checks if the code is coherent and respects the PEP8
+  # Runs the static analysis of codebase
   static-analysis:
     name: Static Analysis
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v4
 
@@ -40,10 +36,8 @@ jobs:
   # Builds the package
   build:
     name: Build
-    needs: [static-analysis]
-
+    needs: [version-analysis, static-analysis]
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v4
 
@@ -54,7 +48,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          python -m pip install --upgrade pip
+          python -m pip  install --upgrade pip
           pip install build
 
       - name: Build package
@@ -62,11 +56,9 @@ jobs:
 
   # Runs unit tests
   unit-tests:
-    name: Unit tests of modules
-    needs: [static-analysis, build]
-
+    name: Tests
+    needs: [version-analysis, static-analysis, build]
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v4
 
@@ -81,4 +73,24 @@ jobs:
           echo "pip install requirements.txt"
 
       - name: Run tests
-        run: echo "python -m  pytest"
+        run: echo "python -m pytest"
+
+  # Runs the integration tests (only on the master branch)
+  integration-tests:
+    name: Integration Tests
+    if: endsWith(github.ref, '/master')           # https://www.maxivanov.io/github-actions-deploy-to-multiple-environments-from-single-workflow/
+    needs: [version-analysis, static-analysis, build, unit-tests]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.9'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          echo "pip install requirements.txt"
+
+      - name: Run tests
+        run: echo "python ./tests/integration_tests.py"
