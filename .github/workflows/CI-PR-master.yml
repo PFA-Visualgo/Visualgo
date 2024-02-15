@@ -56,7 +56,7 @@ jobs:
 
   # Runs unit tests
   unit-tests:
-    name: Tests
+    name: Unit Tests
     needs: [version-analysis, static-analysis, build]
     runs-on: ubuntu-latest
     steps:
