@@ -4,56 +4,51 @@
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>PyScript Next</title>
-    <link rel="stylesheet" href="https://pyscript.net/releases/2024.1.1/core.css">
-    <script type="module" src="https://pyscript.net/releases/2024.1.1/core.js"></script>
+    <!-- we are on 2024.1.3 now -->
+    <link rel="stylesheet" href="https://pyscript.net/releases/2024.1.3/core.css">
+    <script type="module" src="https://pyscript.net/releases/2024.1.3/core.js"></script>
 
 </head>
 <body>
-<script type="pyodide">
-            from js import Promise, document
-            from polyscript import XWorker
+<script type="py" config="./pyscript.json">
+    from pyscript import document
+    from comm_api import to_worker
+    import time
 
-            deferred = Promise.withResolvers()
+    def handle_increment(event):
+        button = document.getElementById("incr")
+        button.disabled = True
+        to_worker.send_message("CONTINUE", ([i for i in range(100)], time.time()))
 
-            def handle_increment(event):
-                global deferred
-                button = document.getElementById("incr")
-                button.disabled = True
-                deferred.resolve()
-                deferred = Promise.withResolvers()
+    def handle_cpt(mes_id, mes_data):
+        button = document.getElementById("incr")
+        button.disabled = False
+        cptDiv = document.getElementById("cpt")
+        cptDiv.textContent = str(mes_data)
 
-            # allows the worker to ask something as placeholder
-            # resolves the returning on micropython-click event
-            # non-blocking this thread, keeping the worker in idle
-            # until such promise is not resolved
-            def handle_cpt(newVal):
-              button = document.getElementById("incr")
-              button.disabled = False
-              cptDiv = document.getElementById("cpt")
-              cptDiv.textContent = str(newVal)
-              return deferred.promise
+    to_worker.set_message_handler(handle_cpt)
 
-            w = XWorker('./worker.py')
 
-            # provide a synchronous input callback
-            # to the polyscript's xworker utility
-            w.sync.count = handle_cpt
-        </script>
-        <button pyodide-click="handle_increment" disabled id="incr">Increment</button>
-        <div id="cpt">loading...</div>
+</script>
+<script type="py" id="worker" config="./pyscript.json" worker>
+    from comm_api import from_worker
+    import time
 
-<!-- this is only to test the non-blocking behavior -->
-        <script>
-          addEventListener('DOMContentLoaded', () => {
-            const div = document.body.appendChild(
-              document.createElement('div')
-            );
-            (function monitor() {
-              const date = new Date;
-              div.textContent = `${date.getSeconds()}.${date.getMilliseconds()}`;
-              requestAnimationFrame(monitor);
-            }());
-          });
-        </script>
+    print("worker on")
+
+    cpt = 0
+
+    while True:
+        mes_id = None
+        mes_data = None
+        while mes_id != "CONTINUE":
+            from_worker.send_message("CPT", cpt)
+            mes_id,mes_data = from_worker.wait_for_main_message()
+            cur_time = time.time()
+            print((cur_time - mes_data[1]) * 1000)
+        cpt += 1
+</script>
+<button py-click="handle_increment" disabled id="incr">Increment</button>
+<div id="cpt">loading...</div>
 </body>
 </html>

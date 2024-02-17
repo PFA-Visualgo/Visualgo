@@ -1,5 +1,7 @@
 {
     "files": {
-        "./pyscript_mylib.py": "./mylib.py"
+        "./pyscript_mylib.py": "./mylib.py",
+        "./pyscript/comm_api/from_worker.py": "./comm_api/from_worker.py",
+        "./pyscript/comm_api/to_worker.py": "./comm_api/to_worker.py"
     }
 }
