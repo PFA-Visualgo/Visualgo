@@ -1,5 +1,4 @@
 import pydebuger
-from polyscript import xworker
 
 def main():
 	debug = pydebuger.MyBdb()

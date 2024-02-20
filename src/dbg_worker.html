@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://pyscript.net/releases/2024.1.3/core.css">
+    <script type="module" src="https://pyscript.net/releases/2024.1.3/core.js"></script>
+</head>
+<body>
+    <script type="py" config="./pyscript.json">
+        from comm_api import to_worker
+        from pyscript import document
+
+        continue_button = document.getElementById("continueBtn")
+
+        def message_handler(mes_id, mes_data):
+            continue_button.disabled = False
+            print(mes_id, mes_data)
+
+        def handle_continue(ev):
+            continue_button.disabled = True
+            to_worker.send_message(None, None)
+
+        to_worker.set_message_handler(message_handler)
+
+    </script>
+
+    <script type="py" id="worker" src="./dbg_test.py" config="./pyscript.json" worker></script>
+    <button py-click="handle_continue" id="continueBtn" disabled>Continue</button>
+</body>
+</html>
