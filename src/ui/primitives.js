@@ -4,6 +4,10 @@ let ctx = null;
 let width = 0;
 let height = 0;
 
+
+///// Canvas Setup Functions /////
+
+
 /**
  * Set the current canvas
  * @param {string} name id of the canvas
@@ -53,5 +57,69 @@ function createCanvas(place, width, height, name) {
     // Initialise context
     changeCurrentCanvas(name);
     ctx.fillStyle = "#FFFFFF";
-
 }
+
+
+///// Parameter Modifiers /////
+
+
+/**
+ * Check if argument is a valid CSS color value
+ * @param {string} color 
+ * @returns 
+ */
+function isValidColor(color) {
+    const s = new Option().style;
+    s.color = color;
+    return s.color !== "";
+}
+
+/**
+ * Change stroke color
+ * @param {string} color
+ */
+function stroke(color) {
+    if (!isValidColor(color)) {
+        throw new Error("Invalid fill color used");
+    }
+    ctx.strokeStyle = color;
+}
+
+/**
+ * Disable stroke
+ */
+function noStroke() {
+    // Change the color to a transparent one
+    fill("#FFFFFF00");
+}
+
+/**
+ * Change the width of strokes
+ * @param {number} weight 
+ */
+function strokeWeight(weight) {
+    if (weight < 0) {
+        throw new Error("Invalid stoke width value")
+    }
+    ctx.strokeStyle = weight;
+}
+
+/**
+ * Change fill color
+ * @param {string} color
+ */
+function fill(color) {
+    if (!isValidColor(color)) {
+        throw new Error("Invalid fill color used");
+    }
+    ctx.fillStyle = color;
+}
+
+/**
+ * Disable shape filling
+ */
+function noFill() {
+    // Change the color to a transparent one
+    fill("#FFFFFF00");
+}
+
