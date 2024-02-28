@@ -5,40 +5,64 @@
     It's purpose is to simplify the creation of drawings, while keeping full controle over the implementation 
 */
 
+// This line is used for the Node.js testing environment
+if (typeof window === "undefined") {
+    global.CanvasRenderingContext2D = require('canvas').CanvasRenderingContext2D;
+    const { JSDOM } = require('jsdom');
+    const dom = new JSDOM('<!DOCTYPE html><html><body></body></html>');
+    global.Option = dom.window.Option;
+}
+
 
 ///// Global Variables /////
 
 
 // context2D of current canvas is a global variables for easy access
-let ctx = null;
+
+
+
+const ctx = {
+    value: null,
+    get: function () {
+        if (this.value === null) {
+            throw new Error("current context2D is undefined");
+        }
+        return this.value;
+    },
+    set: function (newContext) {
+        if (newContext instanceof CanvasRenderingContext2D) {
+            this.value = newContext;
+        }
+        else {
+            this.value = null;
+        }
+    }
+};
 
 // width and height are references to the width and height of the canvas
-Object.defineProperty(window, 'width', {
-    get: function () {
-        contextCheck();
-        return ctx.canvas.width;
-    }
-});
-Object.defineProperty(window, 'height', {
-    get: function () {
-        contextCheck();
-        return ctx.canvas.height;
-    }
-});
+
+if (typeof window !== 'undefined') {
+    // Browser environment
+    Object.defineProperty(window, 'width', {
+        get: function () {
+            return ctx.get().canvas.width;
+        }
+    });
+
+    Object.defineProperty(window, 'height', {
+        get: function () {
+            return ctx.get().canvas.height;
+        }
+    });
+}
+
 
 // background color is used when the canvas is resized
 let backgroundColor = "#FFFFFF" // white
 
+
 ///// Canvas Setup Functions /////
 
-/**
- * Raise an error if current context is not defined
- */
-function contextCheck() {
-    if (ctx === null) {
-        throw new Error("current context2D is undefined");
-    }
-}
 
 /**
  * Create a canvas element and adds it inside another element
@@ -70,7 +94,9 @@ function createCanvas(place, width, height, name) {
     canvasContainer.appendChild(canvas);
 
     // Initialise context
-    ctx = canvas.getContext("2d");
+    ctx.set(canvas.getContext("2d"));
+
+
 }
 
 /**
@@ -87,43 +113,42 @@ function resizeCanvas(w = width, h = height) {
         if (h < 0) {
             throw new Error("Canvas height can not be set to negative value")
         }
-        contextCheck();
 
         // Save all used context variables
-        let ctxData = ctx.getImageData(0, 0, width, height);
-        let ctxStrokeStyle = ctx.strokeStyle;
-        let ctxLineWidth = ctx.lineWidth;
-        let ctxFillStyle = ctx.fillStyle;
-        let ctxTextAlign = ctx.textAlign;
-        let ctxTextBaseline = ctx.textBaseline;
-        let ctxFont = ctx.font;
+        let ctxData = ctx.get().getImageData(0, 0, width, height);
+        let ctxStrokeStyle = ctx.get().strokeStyle;
+        let ctxLineWidth = ctx.get().lineWidth;
+        let ctxFillStyle = ctx.get().fillStyle;
+        let ctxTextAlign = ctx.get().textAlign;
+        let ctxTextBaseline = ctx.get().textBaseline;
+        let ctxFont = ctx.get().font;
 
         let lastWidth = width;
         let lastHeight = height;
 
         // Changing size reset all context attributes
-        ctx.canvas.width = w;
-        ctx.canvas.height = h;
+        ctx.get().canvas.width = w;
+        ctx.get().canvas.height = h;
 
         // Restore all context variable
-        ctx.putImageData(ctxData, 0, 0);
-        ctx.strokeStyle = ctxStrokeStyle;
-        ctx.lineWidth = ctxLineWidth;
-        ctx.fillStyle = ctxFillStyle;
-        ctx.textAlign = ctxTextAlign;
-        ctx.textBaseline = ctxTextBaseline;
-        ctx.font = ctxFont;
+        ctx.get().putImageData(ctxData, 0, 0);
+        ctx.get().strokeStyle = ctxStrokeStyle;
+        ctx.get().lineWidth = ctxLineWidth;
+        ctx.get().fillStyle = ctxFillStyle;
+        ctx.get().textAlign = ctxTextAlign;
+        ctx.get().textBaseline = ctxTextBaseline;
+        ctx.get().font = ctxFont;
 
         // Fill new space with background color
         fill(backgroundColor);
 
-        ctx.beginPath();
-        ctx.rect(lastWidth, 0, width - lastWidth, height);
-        ctx.fill();
+        ctx.get().beginPath();
+        ctx.get().rect(lastWidth, 0, width - lastWidth, height);
+        ctx.get().fill();
 
-        ctx.beginPath();
-        ctx.rect(0, lastHeight, width, height - lastHeight);
-        ctx.fill();
+        ctx.get().beginPath();
+        ctx.get().rect(0, lastHeight, width, height - lastHeight);
+        ctx.get().fill();
 
         fill(ctxFillStyle);
     }
@@ -151,9 +176,8 @@ function stroke(color) {
     if (!isValidColor(color)) {
         throw new Error("Invalid fill color used");
     }
-    contextCheck();
 
-    ctx.strokeStyle = color;
+    ctx.get().strokeStyle = color;
 }
 
 /**
@@ -172,9 +196,8 @@ function strokeWeight(weight) {
     if (weight < 0) {
         throw new Error("Invalid stoke width value")
     }
-    contextCheck();
 
-    ctx.lineWidth = weight;
+    ctx.get().lineWidth = weight;
 }
 
 /**
@@ -185,9 +208,8 @@ function fill(color) {
     if (!isValidColor(color)) {
         throw new Error("Invalid fill color used");
     }
-    contextCheck();
 
-    ctx.fillStyle = color;
+    ctx.get().fillStyle = color;
 }
 
 /**
@@ -210,19 +232,19 @@ function noFill() {
 function point(x, y) {
     // To get a point of a precise size we make a filled circle with no stroke
 
-    contextCheck();
+
     if (!isValidColor(tmp_fill_color)) {
         throw new Error("Invalid fill color used");
     }
 
     // Save color
-    let tmp_fill_color = ctx.fillStyle
+    let tmp_fill_color = ctx.get().fillStyle
 
     // Draw circle of size lineWidth
-    fill(ctx.strokeStyle);
-    ctx.beginPath();
-    ctx.arc(x, y, ctx.lineWidth / 2, 0, 2 * Math.PI);
-    ctx.fill();
+    fill(ctx.get().strokeStyle);
+    ctx.get().beginPath();
+    ctx.get().arc(x, y, ctx.get().lineWidth / 2, 0, 2 * Math.PI);
+    ctx.get().fill();
 
     // Load back saved colors
     fill(tmp_fill_color);
@@ -237,11 +259,11 @@ function point(x, y) {
  * @param {number} y2 
  */
 function line(x1, y1, x2, y2) {
-    contextCheck();
-    ctx.beginPath();
-    ctx.moveTo(x1, y1);
-    ctx.lineTo(x2, y2);
-    ctx.stroke();
+
+    ctx.get().beginPath();
+    ctx.get().moveTo(x1, y1);
+    ctx.get().lineTo(x2, y2);
+    ctx.get().stroke();
 }
 
 /**
@@ -252,11 +274,11 @@ function line(x1, y1, x2, y2) {
  * @param {number} h height of the rectangle
  */
 function rect(x, y, w, h) {
-    contextCheck();
-    ctx.beginPath();
-    ctx.rect(x, y, w, h);
-    ctx.fill();
-    ctx.stroke();
+
+    ctx.get().beginPath();
+    ctx.get().rect(x, y, w, h);
+    ctx.get().fill();
+    ctx.get().stroke();
 }
 
 /**
@@ -276,11 +298,11 @@ function square(x, y, s) {
  * @param {number} d 
  */
 function circle(x, y, d) {
-    contextCheck();
-    ctx.beginPath();
-    ctx.arc(x, y, d / 2, 0, 2 * Math.PI);
-    ctx.fill();
-    ctx.stroke();
+
+    ctx.get().beginPath();
+    ctx.get().arc(x, y, d / 2, 0, 2 * Math.PI);
+    ctx.get().fill();
+    ctx.get().stroke();
 }
 
 
@@ -293,7 +315,7 @@ function circle(x, y, d) {
  * @param {string} vertical "top" || "hanging" || "middle" || "alphabetic" || "ideographic" || "bottom"
  */
 function textAlign(horizontal = "center", vertical = "middle") {
-    contextCheck();
+
     if (!["left", "right", "center", "start", "end"].includes(horizontal)) {
         throw new Error("Invalid horizontal alignment");
     }
@@ -301,8 +323,8 @@ function textAlign(horizontal = "center", vertical = "middle") {
         throw new Error("Invalid vertical alignment");
     }
 
-    ctx.textAlign = horizontal;
-    ctx.textBaseline = vertical;
+    ctx.get().textAlign = horizontal;
+    ctx.get().textBaseline = vertical;
 }
 
 /**
@@ -310,11 +332,10 @@ function textAlign(horizontal = "center", vertical = "middle") {
  * @param {string} font valid CSS font value
  */
 function textFont(font) {
-    contextCheck();
-    ctx.font = font;
+    ctx.get().font = font;
 
     // If the font is not valid, the default CSS behaviour is to not change it
-    if (font !== ctx.font) {
+    if (font !== ctx.get().font) {
         throw new Error("Font not valid");
     }
 
@@ -327,8 +348,7 @@ function textFont(font) {
  * @param {number} y 
  */
 function text(txt, x, y) {
-    contextCheck();
-    ctx.fillText(txt, x, y);
+    ctx.get().fillText(txt, x, y);
 }
 
 
@@ -341,7 +361,6 @@ function text(txt, x, y) {
  */
 function background(color) {
 
-    contextCheck();
     if (!isValidColor(color)) {
         throw new Error("Invalid fill color used");
     }
@@ -349,16 +368,16 @@ function background(color) {
     backgroundColor = color;
 
     // Save current color
-    let tmp = ctx.fillStyle
-    ctx.fillStyle = color;
+    let tmp = ctx.get().fillStyle
+    ctx.get().fillStyle = color;
 
     // Draw a filled rectangle the size of the canvas
-    ctx.beginPath();
-    ctx.rect(0, 0, width, height);
-    ctx.fill();
+    ctx.get().beginPath();
+    ctx.get().rect(0, 0, width, height);
+    ctx.get().fill();
 
     // Load saved color
-    ctx.fillStyle = tmp;
+    ctx.get().fillStyle = tmp;
 }
 
 /**
@@ -373,4 +392,7 @@ function int(x) {
     else {
         return Math.floor(x + 1);
     }
+}
+if (typeof window === 'undefined') {
+    module.exports = { ctx, backgroundColor, createCanvas, resizeCanvas, isValidColor, stroke, noStroke, strokeWeight, fill, noFill, point, line, rect, square, circle, textAlign, textFont, text, background, int };
 }
