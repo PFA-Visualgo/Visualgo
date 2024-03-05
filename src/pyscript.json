@@ -1,0 +1,8 @@
+{
+    "files": {
+        "./pydebuger.py": "./pydebuger.py"
+    },
+    "packages": [
+        "numpy"
+    ]
+}
