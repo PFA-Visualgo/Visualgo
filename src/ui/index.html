@@ -1,0 +1,90 @@
+<!doctype html>
+
+<html>
+
+<head>
+    <!-- Recommended meta tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+    <!-- PyScript CSS -->
+    <link rel="stylesheet" href="https://pyscript.net/releases/2024.1.1/core.css">
+    <!-- page CSS -->
+    <link rel="stylesheet" href="./index.css" />
+
+    <!-- This script tag bootstraps PyScript -->
+    <script type="module" src="https://pyscript.net/releases/2024.1.1/core.js"></script>
+
+    <!-- include CodeMirror for code text input, autocompletion and highlighting  -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.3/codemirror.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.3/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.3/mode/python/python.min.js"></script>
+
+    <!-- styling change as needed -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.3/theme/dracula.min.css">
+
+    <!-- for splashscreen -->
+    <style>
+        #loading {
+            outline: none;
+            border: none;
+            background: transparent
+        }
+    </style>
+    <script type="module">
+        const loading = document.getElementById('loading');
+        addEventListener('py:ready', () => loading.close());
+        loading.showModal();
+    </script>
+
+    <title>Visualgo - Visualise Data Structure</title>
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👩🏻‍💻</text></svg>">
+</head>
+
+<body>
+    <dialog id="loading">
+        <h1>Loading...</h1>
+    </dialog>
+
+    <section class="pyscript">
+        <div id="header" class="container" id="executionSection">
+            <div class="container-vertical">
+                <button id="importFileButton" onclick="importFile()">Import File</button>
+                <button id="saveFileButton" onclick="saveFile()">Save File</button>
+            </div>
+            <button class="disabled" id="selectFunctionsButton" py-click="selectFunctions"> Select Functions <br>
+                Calls
+                to track</button>
+            <button class="disabled" id="selectVariablesButton" py-click="selectVariables">Select Variables <br>to
+                show</button>
+            <button id="startButton"> Start </button>
+            <button id="pauseButton" py-click="pause"> Pause </button>
+            <input type="text" id="stepInput" placeholder="1000 (Steps in ms)" oninput="checkTimeStepValue(this)"
+                max="10000" />
+            <div class="container-vertical">
+                <button id="stepBackwardButton" py-click="stepBackward">Step Backward</button>
+                <button id="nextBackwardButton" py-click="nextBackward">Next Backward</button>
+            </div>
+            <div class="container-vertical">
+                <button id="stepForwardButton" py-click="stepForward">Step Forward</button>
+                <button id="nextForwardButton" py-click="nextForward">Next Forward</button>
+            </div>
+        </div>
+        <div id="codeEditorContainer">
+            <textarea id="codeEditor" placeholder="Type your Python code here..."></textarea>
+        </div>
+
+        <div id="drawingArea">
+            Drawing Area
+        </div>
+
+    </section>
+
+    <script src="index.js"></script>
+    <py-env>
+        <script type="py" src="./api.py" config="./pyscript.json"></script>
+    </py-env>
+</body>
+
+</html>
