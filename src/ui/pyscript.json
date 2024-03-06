@@ -1,0 +1,9 @@
+{
+    "files": {
+        "../main.py": "../main.py",
+        "../wasm-scripts/main.py": "../wasm-scripts/main.py",
+        "../wasm-scripts/pyscript_ui_callbacks.py": "pyscript_ui_callbacks.py",
+        "../../Visualgo/src/visualgo/logic/ui/ui_callbacks_pyscript.py": "ui_callbacks_pyscript.py"
+    },
+    "packages": []
+}
