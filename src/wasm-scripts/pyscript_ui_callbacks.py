@@ -1,16 +1,20 @@
-from ui_callbacks_pyscript import UICallbacksInterface
+from visualgo.logic import UICallbacksInterface, TransferVariables,  Statistics
+
 from js import update_variables, update_statistics, show_error, get_code
 
 class PyscriptUICallbacks(UICallbacksInterface):
     """
     Implementation of UICallbacksInterface that calls the JS frontend
     """
+    def get_code(self) -> str:
+        return get_code()
 
-    def update_variables(self, variables) -> None:
+    def update_variables(self, variables : TransferVariables) -> None:
         update_variables(variables)
+        self.show_error("Callback called: update_variables") # temporary to show it works
         pass
 
-    def update_statistics(self, statistics) -> None:
+    def update_statistics(self, statistics : Statistics) -> None:
         update_statistics(statistics)
         pass
 
@@ -18,17 +22,5 @@ class PyscriptUICallbacks(UICallbacksInterface):
         show_error(error)
         pass
 
-    def get_code(self) -> str:
-        return get_code()
-
-
-# class Test():
-#     def __init__(self):
-#         self._scriptCode = ""
-#         self._globalsVars = {}
-#         self._localsVars = {}
-#         self._currentLine = 0
-#         self._task = None
-#         self._runState = 0
 
 

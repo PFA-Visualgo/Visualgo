@@ -1,6 +1,7 @@
 {
     "files": {
-        "./api.py": "api.py",
+        "../wasm-scripts/main.py": "../wasm-scripts/main.py",
+        "../wasm-scripts/pyscript_ui_callbacks.py": "pyscript_ui_callbacks.py",
         "./{PKG}": "./{PKG}"
     },
     "packages": [

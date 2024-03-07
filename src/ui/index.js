@@ -13,22 +13,6 @@ var editor = CodeMirror.fromTextArea(document.getElementById('codeEditor'), {
     }
 });
 
-function update_variables() {
-
-}
-
-function update_statistics() {
-
-}
-
-function show_error() {
-
-}
-
-function get_code() {
-    return editor.getValue();
-}
-
 // Apply your custom styles
 editor.getWrapperElement().style.width = '38%';
 editor.getWrapperElement().style.height = '100vh';
