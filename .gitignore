@@ -1,3 +1,7 @@
+# Pyscript
+src/ui/pyscript.json
+src/ui/*.whl
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

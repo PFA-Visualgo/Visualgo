@@ -57,10 +57,12 @@
                 <button id="importFileButton" onclick="importFile()">Import File</button>
                 <button id="saveFileButton" onclick="saveFile()">Save File</button>
             </div>
-            <button id="selectFunctionsButton" py-click="selectFunctions"> Select Functions <br>
+            <button class="disabled" id="selectFunctionsButton" py-click="selectFunctions"> Select
+                Functions <br>
                 Calls
                 to track</button>
-            <button id="selectVariablesButton" py-click="selectVariables">Select Variables <br>to
+            <button class="disabled" id="selectVariablesButton" py-click="selectVariables">Select
+                Variables <br>to
                 show</button>
             <button id="startButton" py-click="start"> Start </button>
             <button id="pauseButton" py-click="pause"> Pause </button>
@@ -86,10 +88,15 @@
     </section>
 
     <script src="index.js"></script>
-
-    <!-- <script type="py" src="../main.py" config="pyscript.json"></script> -->
-    <script type="py" src="../wasm-scripts/main.py" config="./pyscript.json"></script>
-    <!-- <script type="py" src="./second_main.py" config="./pyscript.json"></script> -->
+    <<<<<<< HEAD <!-- <script type="py" src="../main.py" config="pyscript.json">
+        </script> -->
+        <script type="py" src="../wasm-scripts/main.py" config="./pyscript.json"></script>
+        <!-- <script type="py" src="./second_main.py" config="./pyscript.json"></script> -->
+        =======
+        <py-env>
+            <script type="py" src="./api.py" config="./pyscript.json"></script>
+        </py-env>
+        >>>>>>> junk/ArthurLeFloch/ui-controller-calls
 </body>
 
 </html>
