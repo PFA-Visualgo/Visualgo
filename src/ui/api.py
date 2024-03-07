@@ -15,8 +15,7 @@ class Callbacks(UICallbacksInterface):
         return "print('Hello, World!')"
 
     def update_variables(self, vars: TransferVariables) -> None:
-        self.show_error("Callback called: update_variables")
-        print(vars)
+        pass
 
     def update_statistics(self, stats: Statistics) -> None:
         pass

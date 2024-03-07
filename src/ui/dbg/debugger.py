@@ -22,28 +22,21 @@ class TmpPyDebugger(DebuggerInterface):
 
     def set_code(self, code: str) -> None:
         self.__code = code
-        to_worker.send_message("code_set", code)
 
     def add_breakpoint(self, line_number: int, cond: str) -> None:
-        error = CodeError(True, line_number, cond)
-        self.__callbacks.on_error(error)
-        to_worker.send_message("error", error)
+        raise NotImplementedError("Method not implemented yet")
 
     def backward_step(self) -> None:
-        self.__callbacks.backward_step_done(self.context, 0)
-        to_worker.send_message("backward_step_done", (self.context, 0))
+        raise NotImplementedError("Method not implemented yet")
 
     def forward_step(self) -> None:
-        self.__callbacks.forward_step_done(self.context, 0)
-        to_worker.send_message("forward_step_done", (self.context, 0))
+        raise NotImplementedError("Method not implemented yet")
 
     def step_into(self) -> None:
-        self.__callbacks.step_into_done(self.context, 0)
-        to_worker.send_message("step_into_done", (self.context, 0))
+        raise NotImplementedError("Method not implemented yet")
 
     def do_continue(self) -> None:
-        self.__callbacks.continue_done(self.context, 0)
-        to_worker.send_message("continue_done", (self.context, 0))
+        raise NotImplementedError("Method not implemented yet")
 
 
 if __name__ == "__main__":
