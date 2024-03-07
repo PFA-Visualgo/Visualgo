@@ -1,33 +1,26 @@
 from pyscript import document
 from pyodide.ffi import create_proxy
 
-from visualgo.logic.ui.ui_callbacks import UICallbacksInterface
-from visualgo.logic.ui.types import TransferVariables
-from visualgo.logic.types import Statistics
-from visualgo.logic.controller import Controller
-from visualgo.logic.debugger.py_debugger import PyDebugger
+from visualgo.logic import Controller, PyDebugger
 
 from pyscript_ui_callbacks import PyscriptUICallbacks
 
-if __name__ == "__main__":
-    controller = Controller(PyDebugger(), PyscriptUICallbacks())
-
-def start(event):
-    print("start")
-
 class Visualisation:
+    """
+    Class that acts as the main interface between the frontend and the backend.
+    """
 
     def __init__(self):
-        self.controller = Controller(PyDebugger, Callbacks())
-        self.code = "print('Hello, World!')"
+        self.__controller = Controller(PyDebugger, PyscriptUICallbacks())
 
     def start(self, _):
-        self.controller.start(self.code)
+        # self.__controller.start()
+        pass
 
 
 if __name__ == "__main__":
     visualisation = Visualisation()
-    print(visualisation.controller.__dict__)
+    # print(visualisation.controller.__dict__)
 
     document.getElementById("startButton").addEventListener(
         "click", create_proxy(visualisation.start)

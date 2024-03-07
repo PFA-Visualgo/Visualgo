@@ -88,7 +88,17 @@
     </section>
 
     <script src="index.js"></script>
-    <script src="ui_interface.js"></script>
+    <script src="ui_public_functions.js"></script>
+    <!-- <script>
+        async function main() {
+            functions = await import('./ui_interface.js')
+            update_variables = functions.update_variables
+            update_statistics = functions.update_statistics
+            show_error = functions.show_error
+            get_code = functions.get_code
+        }
+        main();
+    </script> -->
 
     <py-env>
         <script type="py" src="../wasm-scripts/main.py" config="./pyscript.json"></script>
