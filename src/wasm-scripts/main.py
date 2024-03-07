@@ -1,8 +1,6 @@
 from pyscript import document
 from pyodide.ffi import create_proxy
 
-import numpy as np
-
 from visualgo.logic import Controller, PyDebugger
 
 from pyscript_ui_callbacks import PyscriptUICallbacks

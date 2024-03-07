@@ -10,6 +10,5 @@ GREEN='\033[32m'
 set -e
 
 # Launch http server at src/ui/
-cd src/ui
-echo -e "${BOLD}${GREEN}>> Join the website at http://localhost:8000 <<${RESET}"
+echo -e "${BOLD}${GREEN}>> Join the website at http://localhost:8000/src/ui/ <<${RESET}"
 python -m http.server 8000
