@@ -1,6 +1,9 @@
 {
     "files": {
         "./api.py": "api.py",
+        "./dbg/debugger.py": "./debugger.py",
+        "./dbg/from_worker.py": "./from_worker.py",
+        "./dbg/to_worker.py": "./to_worker.py",
         "./{PKG}": "./{PKG}"
     },
     "packages": [

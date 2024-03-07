@@ -8,12 +8,12 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
 
     <!-- PyScript CSS -->
-    <link rel="stylesheet" href="https://pyscript.net/releases/2024.1.1/core.css">
+    <link rel="stylesheet" href="https://pyscript.net/releases/2024.2.1/core.css">
     <!-- page CSS -->
     <link rel="stylesheet" href="./index.css" />
 
     <!-- This script tag bootstraps PyScript -->
-    <script type="module" src="https://pyscript.net/releases/2024.1.1/core.js"></script>
+    <script type="module" src="https://pyscript.net/releases/2024.2.1/core.js"></script>
 
     <!-- include CodeMirror for code text input, autocompletion and highlighting  -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.3/codemirror.min.css">
@@ -82,9 +82,11 @@
     </section>
 
     <script src="index.js"></script>
+
     <py-env>
         <script type="py" src="./api.py" config="./pyscript.json"></script>
+        <script type="pyodide" id="worker" src="./dbg/debugger.py" config="./pyscript.json" worker></script>
     </py-env>
-</body>
+    </body>
 
 </html>
