@@ -1,4 +1,4 @@
-name: CI-PR
+name: CI-releases
 
 # Controls when the workflow will run
 on:
