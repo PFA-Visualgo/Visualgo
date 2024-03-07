@@ -1,7 +1,7 @@
 # Makefile
 
 # Default target
-all: install
+all: start
 
 RESET = \033[0m
 BOLD = \033[1m
@@ -38,6 +38,10 @@ update-submodules:
 install: update-submodules check-venv dependencies
 	@echo "$(BOLD)$(GREEN)>> Installing the visualgo wheel <<$(RESET)"
 	./scripts/install.sh
+
+start: install
+	@echo "$(BOLD)$(GREEN)>> Starting the visualgo html page <<$(RESET)"
+	./scripts/start_server.sh
 
 # Define phony targets
 .PHONY: all check-venv install run clean tests freeze
