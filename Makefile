@@ -1,14 +1,18 @@
 # Makefile
 
 # Default target
-all: start
+all: build server
 
-RESET = \033[0m
-BOLD = \033[1m
-GREEN = \033[32m
-RED = \033[31m
+BOLD := $(shell tput bold)
+GREEN := $(shell tput setaf 2)
+RESET := $(shell tput sgr0)
+RED := $(shell tput setaf 1)
 
 export PYTHONPATH := $(PWD)/src:$(PYTHONPATH)
+
+update-submodules:
+	@echo "$(BOLD)$(GREEN)>> Updating submodules <<$(RESET)"
+	git submodule update --init --recursive
 
 # Check if the virtual environment is activated and not the default Conda environment
 check-venv:
@@ -30,23 +34,24 @@ dependencies:
 	python -m pip install --upgrade pip
 	pip install wheel
 
-update-submodules:
-	@echo "$(BOLD)$(GREEN)>> Updating submodules <<$(RESET)"
-	git submodule update --init --recursive
-
 # Install dependencies from requirements.txt
-install: update-submodules check-venv dependencies
-	@echo "$(BOLD)$(GREEN)>> Installing the visualgo wheel <<$(RESET)"
-	./scripts/install.sh 
+build: update-submodules check-venv dependencies
+	@echo "$(BOLD)$(GREEN)>> Building the visualgo wheel <<$(RESET)"
+	./scripts/build.sh 
 
-start: install
-	@echo "$(BOLD)$(GREEN)>> Starting the visualgo html page <<$(RESET)"
-	./scripts/start_server.sh 
+server:
+	@if [ -z "$$(ls -A src/ui/*.whl 2>/dev/null)" ]; then \
+		echo "$(BOLD)$(RED)No .whl file found in src/ui/, run 'make build'$(RESET)"; \
+	else \
+		echo "$(BOLD)$(GREEN)>> Starting the Visualgo html page <<$(RESET)"; \
+		./scripts/start_server.sh; \
+	fi
 
 clean:
 	@echo "$(BOLD)$(GREEN)>>Cleaning up <<$(RESET)"
 	rm -rf src/ui/*.whl 
 	cd Visualgo-PyPI; make clean
-	@echo "$(BOLD)$(GREEN)Project cleaned correctly.$(RESET)"
+	@echo "$(BOLD)$(GREEN)Project Visualgo cleaned correctly.$(RESET)"
+
 # Define phony targets
-.PHONY: all check-venv install run clean tests freeze
+.PHONY: all check-venv build run clean tests freeze
