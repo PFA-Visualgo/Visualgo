@@ -5,7 +5,7 @@ from visualgo.logic.ui.ui_callbacks import UICallbacksInterface
 from visualgo.logic.ui.types import TransferVariables
 from visualgo.logic.types import Statistics
 from visualgo.logic.controller import Controller
-from debugger import TmpPyDebugger
+from visualgo.logic.debugger.py_debugger import PyDebugger
 
 
 # For demonstration purposes
@@ -27,7 +27,7 @@ class Callbacks(UICallbacksInterface):
 class Visualisation:
 
     def __init__(self):
-        self.controller = Controller(TmpPyDebugger, Callbacks())
+        self.controller = Controller(PyDebugger, Callbacks())
         self.code = "print('Hello, World!')"
 
     def start(self, _):
