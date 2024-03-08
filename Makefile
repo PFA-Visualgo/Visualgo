@@ -37,11 +37,16 @@ update-submodules:
 # Install dependencies from requirements.txt
 install: update-submodules check-venv dependencies
 	@echo "$(BOLD)$(GREEN)>> Installing the visualgo wheel <<$(RESET)"
-	./scripts/install.sh
+	./scripts/install.sh 
 
 start: install
 	@echo "$(BOLD)$(GREEN)>> Starting the visualgo html page <<$(RESET)"
-	./scripts/start_server.sh
+	./scripts/start_server.sh 
 
+clean:
+	@echo "$(BOLD)$(GREEN)>>Cleaning up <<$(RESET)"
+	rm -rf src/ui/*.whl 
+	cd Visualgo-PyPI; make clean
+	@echo "$(BOLD)$(GREEN)Project cleaned correctly.$(RESET)"
 # Define phony targets
 .PHONY: all check-venv install run clean tests freeze
