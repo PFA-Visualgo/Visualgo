@@ -1,9 +1,0 @@
-{
-    "files": {
-        "../wasm-scripts/main.py": "../wasm-scripts/main.py",
-        "../wasm-scripts/pyscript_ui_callbacks.py": "pyscript_ui_callbacks.py"
-    },
-    "packages": [
-        "visualgo"
-    ]
-}

@@ -9,7 +9,8 @@ rm -rf build dist
 
 # Create a wheel file and place it in the src/ui/
 cd Visualgo-PyPI
-python setup.py bdist_wheel
+# python setup.py bdist_wheel
+make build_wheel
 cd ..
 cp Visualgo-PyPI/dist/*.whl src/ui/
 
