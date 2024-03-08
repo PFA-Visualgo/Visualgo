@@ -89,10 +89,11 @@
     </section>
 
     <script src="index.js"></script>
+    <script src="ui_public_functions.js"></script>
 
     <py-env>
-        <script type="py" src="./api.py" config="./pyscript.json"></script>
-        <script type="pyodide" id="worker" src="./worker.py" config="./pyscript.json" worker></script>
+        <script type="py" src="../wasm-scripts/main.py" config="../pyscript/pyscript.json"></script>
+        <script type="pyodide" id="worker" src="../wasm-scripts/worker.py" config="../pyscript/pyscript.json" worker></script>
     </py-env>
 </body>
 

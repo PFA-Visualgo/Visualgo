@@ -1,5 +1,5 @@
-from debugger.__private.comm_api import to_worker, from_worker
-from debugger.__private.comm_impl.python_to_worker import PythonToWorker
+from visualgo.logic.debugger.__private.comm_api import to_worker, from_worker
+from visualgo.logic.debugger.__private.comm_impl.python_to_worker import PythonToWorker
 
 
 def task():

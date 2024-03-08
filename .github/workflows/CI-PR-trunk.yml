@@ -1,10 +1,11 @@
-name: CI-PR
+name: CI-PR-trunk
 
 # Controls when the workflow will run
 on:
   # Triggers the workflow on pull request events but only for the "master" branch
   pull_request:
-    branches: ["master"]
+    branches: ["trunk"]
+
   # Allows you to run this workflow manually from the Actions tab, only possible if this file is in the default branch (aka master)
   workflow_dispatch:
 
@@ -33,6 +34,24 @@ jobs:
       #     flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
       #     flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 
+  # Runs the Build
+  build:
+    name: Build wheel
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.9'
+
+      - name: run 'make build'
+        run: |
+          python -m venv venv
+          source venv/bin/activate
+          make build
+
   # Runs unit tests
   unit-tests:
     name: Unit Tests
@@ -51,22 +70,4 @@ jobs:
           echo "pip install requirements.txt"
 
       - name: Run tests
-        run: echo "python -m pytest"
-
-  # Runs the integration tests (only on the master branch)
-  integration-tests:
-    name: Integration Tests
-    runs-on: ubuntu-latest
-    steps:
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.9'
-
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          echo "pip install requirements.txt"
-
-      - name: Run tests
-        run: echo "python ./tests/integration_tests.py"
+        run: echo "start js tests"

@@ -1,9 +1,0 @@
-{
-    "files": {
-        "./api.py": "api.py",
-        "./{PKG}": "./{PKG}"
-    },
-    "packages": [
-        "./{PKG}"
-    ]
-}
