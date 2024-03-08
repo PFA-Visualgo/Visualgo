@@ -1,4 +1,4 @@
 [submodule "Visualgo-PyPI"]
 	path = Visualgo-PyPI
-	url = git@github.com:PFA-Visualgo/Visualgo-PyPI.git
+	url = https://github.com/PFA-Visualgo/Visualgo-PyPI.git
 	branch = dev
