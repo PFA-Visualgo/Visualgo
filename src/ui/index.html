@@ -8,10 +8,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <title>Visualgo</title>
-    <link rel="stylesheet" href="./src/ui/style.css" />
-    <link rel="icon" href="./src/ui/icon.ico">
-    <script src="src/ui/primitives.js"></script>
-    <script src="src/ui/drawData.js"></script>
+    <link rel="stylesheet" href="./style.css" />
+    <link rel="icon" href="./icon.ico">
+    <script src="./primitives.js"></script>
+    <!-- <script src="src/ui/drawData.js"></script> -->
 </head>
 
 <body>
@@ -49,9 +49,9 @@
     </div>
 
     <!-- Include Monaco Editor's loader.js -->
-    <script src="libs/monaco-editor/min/vs/loader.js"></script>
+    <script src="../../libs/monaco-editor/min/vs/loader.js"></script>
     <script>
-        require.config({ paths: { vs: 'libs/monaco-editor/min/vs' } });
+        require.config({ paths: { vs: '../../libs/monaco-editor/min/vs' } });
         require(['vs/editor/editor.main'], function () {
             var editor = monaco.editor.create(document.getElementById('code-container'), {
                 value: ['print("Hello World")', ''].join('\n'),
@@ -59,80 +59,12 @@
             });
         });
     </script>
-
+    <script src="./index.js"></script>
     <script>
-        //Show dropdown file menu on click
-        document.addEventListener('DOMContentLoaded', function () {
-            var fileDropdown = document.getElementById('file-dropdown');
-            var fileBtn = document.getElementById('file-button');
-
-            fileBtn.addEventListener('click', function (event) {
-                event.stopPropagation(); // Prevent this click event from propagating to the document click listener
-                fileDropdown.classList.toggle('show'); // Toggle the visibility of dropdown content
-                document.getElementById('select-dropdown').classList.remove('show');
-            });
-
-            document.addEventListener('click', function (event) {
-                if (!fileDropdown.contains(event.target)) {
-                    fileDropdown.classList.remove('show'); // Hide dropdown content if click is outside of dropdown
-                }
-            });
-        });
-
-        //Show dropdown file menu on click
-        document.addEventListener('DOMContentLoaded', function () {
-            var selectDropdown = document.getElementById('select-dropdown');
-            var selectBtn = document.getElementById('select-button');
-
-            selectBtn.addEventListener('click', function (event) {
-                event.stopPropagation(); // Prevent this click event from propagating to the document click listener
-                selectDropdown.classList.toggle('show'); // Toggle the visibility of dropdown content
-                document.getElementById('file-dropdown').classList.remove('show'); // Hide dropdown content if click is outside of dropdown
-            });
-
-            document.addEventListener('click', function (event) {
-                if (!selectDropdown.contains(event.target)) {
-                    selectDropdown.classList.remove('show'); // Hide dropdown content if click is outside of dropdown
-                }
-            });
-        });
-        //Open a file
-        document.getElementById("file-open-button").addEventListener("click", function () {
-            var input = document.createElement('input');
-            input.type = 'file';
-            //input.webkitdirectory = true; // Allow choosing directory
-            input.accept = '.py';
-            input.addEventListener('change', function (event) {
-                var file = event.target.files[0];
-                var reader = new FileReader();
-                reader.onload = function () {
-                    document.getElementById("code-editor").value = reader.result;
-                };
-                reader.readAsText(file);
-            });
-            input.click();
-        });
-
-        // Download code as code.py
-        document.getElementById("file-download-button").addEventListener('click', function () {
-            var content = "";//codeEditor.value;
-            var blob = new Blob([content], { type: 'text/plain' });
-            var url = window.URL.createObjectURL(blob);
-            var a = document.createElement('a');
-            a.href = url;
-            a.download = 'code.py'; // Default filename
-            a.click();
-            window.URL.revokeObjectURL(url);
-        });
-
-        //TODO export statistics as csv
-
+        createCanvas("canvas-container", 600, 600, "canvas");
+        background("#AAAAAA");
     </script>
-    <script>
-        createCanvas("canvas-container", window.innerWidth * 3 / 5, window.innerHeight * 4 / 5, "canvas");
-        setup();
-        draw();
-    </script>
+
 </body>
 
 </html>
