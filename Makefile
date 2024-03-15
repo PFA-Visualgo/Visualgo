@@ -40,8 +40,8 @@ build: update-submodules check-venv dependencies
 	./scripts/build.sh 
 
 server:
-	@if [ -z "$$(ls -A src/ui/*.whl 2>/dev/null)" ]; then \
-		echo "$(BOLD)$(RED)No .whl file found in src/ui/, run 'make build'$(RESET)"; \
+	@if [ -z "$$(ls -A src/wasm-scripts/*.whl 2>/dev/null)" ]; then \
+		echo "$(BOLD)$(RED)No .whl file found in src/wasm-scripts/, run 'make build'$(RESET)"; \
 	else \
 		echo "$(BOLD)$(GREEN)>> Starting the Visualgo html page <<$(RESET)"; \
 		./scripts/start_server.sh; \
