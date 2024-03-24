@@ -5,6 +5,7 @@
     It's purpose is to simplify the creation of drawings, while keeping full controle over the implementation 
 */
 
+
 // This line is used for the Node.js testing environment
 if (typeof window === "undefined") {
     global.CanvasRenderingContext2D = require('canvas').CanvasRenderingContext2D;
@@ -18,8 +19,6 @@ if (typeof window === "undefined") {
 
 
 // context2D of current canvas is a global variables for easy access
-
-
 
 const ctx = {
     value: null,
@@ -94,8 +93,8 @@ function createCanvas(place, width, height, name) {
     canvasContainer.appendChild(canvas);
 
     // Initialise context
-    ctx.set(canvas.getContext("2d"));
 
+    ctx.set(canvas.getContext("2d"));
 
 }
 
@@ -123,10 +122,12 @@ function resizeCanvas(w = width, h = height) {
         let ctxTextBaseline = ctx.get().textBaseline;
         let ctxFont = ctx.get().font;
 
+
         let lastWidth = width;
         let lastHeight = height;
 
         // Changing size reset all context attributes
+
         ctx.get().canvas.width = w;
         ctx.get().canvas.height = h;
 
@@ -139,8 +140,10 @@ function resizeCanvas(w = width, h = height) {
         ctx.get().textBaseline = ctxTextBaseline;
         ctx.get().font = ctxFont;
 
+
         // Fill new space with background color
         fill(backgroundColor);
+
 
         ctx.get().beginPath();
         ctx.get().rect(lastWidth, 0, width - lastWidth, height);
@@ -149,6 +152,7 @@ function resizeCanvas(w = width, h = height) {
         ctx.get().beginPath();
         ctx.get().rect(0, lastHeight, width, height - lastHeight);
         ctx.get().fill();
+
 
         fill(ctxFillStyle);
     }
@@ -178,6 +182,7 @@ function stroke(color) {
     }
 
     ctx.get().strokeStyle = color;
+
 }
 
 /**
@@ -198,6 +203,7 @@ function strokeWeight(weight) {
     }
 
     ctx.get().lineWidth = weight;
+
 }
 
 /**
@@ -210,6 +216,7 @@ function fill(color) {
     }
 
     ctx.get().fillStyle = color;
+
 }
 
 /**
@@ -232,12 +239,12 @@ function noFill() {
 function point(x, y) {
     // To get a point of a precise size we make a filled circle with no stroke
 
-
     if (!isValidColor(tmp_fill_color)) {
         throw new Error("Invalid fill color used");
     }
 
     // Save color
+
     let tmp_fill_color = ctx.get().fillStyle
 
     // Draw circle of size lineWidth
@@ -245,6 +252,7 @@ function point(x, y) {
     ctx.get().beginPath();
     ctx.get().arc(x, y, ctx.get().lineWidth / 2, 0, 2 * Math.PI);
     ctx.get().fill();
+
 
     // Load back saved colors
     fill(tmp_fill_color);
@@ -259,7 +267,6 @@ function point(x, y) {
  * @param {number} y2 
  */
 function line(x1, y1, x2, y2) {
-
     ctx.get().beginPath();
     ctx.get().moveTo(x1, y1);
     ctx.get().lineTo(x2, y2);
@@ -274,11 +281,11 @@ function line(x1, y1, x2, y2) {
  * @param {number} h height of the rectangle
  */
 function rect(x, y, w, h) {
-
     ctx.get().beginPath();
     ctx.get().rect(x, y, w, h);
     ctx.get().fill();
     ctx.get().stroke();
+
 }
 
 /**
@@ -298,11 +305,11 @@ function square(x, y, s) {
  * @param {number} d 
  */
 function circle(x, y, d) {
-
     ctx.get().beginPath();
     ctx.get().arc(x, y, d / 2, 0, 2 * Math.PI);
     ctx.get().fill();
     ctx.get().stroke();
+
 }
 
 
@@ -315,7 +322,6 @@ function circle(x, y, d) {
  * @param {string} vertical "top" || "hanging" || "middle" || "alphabetic" || "ideographic" || "bottom"
  */
 function textAlign(horizontal = "center", vertical = "middle") {
-
     if (!["left", "right", "center", "start", "end"].includes(horizontal)) {
         throw new Error("Invalid horizontal alignment");
     }
@@ -325,6 +331,7 @@ function textAlign(horizontal = "center", vertical = "middle") {
 
     ctx.get().textAlign = horizontal;
     ctx.get().textBaseline = vertical;
+
 }
 
 /**
@@ -360,7 +367,6 @@ function text(txt, x, y) {
  * @param {string} color 
  */
 function background(color) {
-
     if (!isValidColor(color)) {
         throw new Error("Invalid fill color used");
     }
@@ -368,6 +374,7 @@ function background(color) {
     backgroundColor = color;
 
     // Save current color
+
     let tmp = ctx.get().fillStyle
     ctx.get().fillStyle = color;
 
@@ -378,6 +385,7 @@ function background(color) {
 
     // Load saved color
     ctx.get().fillStyle = tmp;
+
 }
 
 /**
@@ -393,6 +401,8 @@ function int(x) {
         return Math.floor(x + 1);
     }
 }
+
 if (typeof window === 'undefined') {
     module.exports = { ctx, backgroundColor, createCanvas, resizeCanvas, isValidColor, stroke, noStroke, strokeWeight, fill, noFill, point, line, rect, square, circle, textAlign, textFont, text, background, int };
 }
+

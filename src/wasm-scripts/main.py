@@ -15,6 +15,9 @@ class Visualisation:
     def start(self, _):
         self.controller.start()
 
+    def pause_continue(self, _):
+        self.controller.pause_continue()
+
     def forward_step(self, _):
         self.controller.forward_step()
 
@@ -34,6 +37,10 @@ if __name__ == "__main__":
 
     document.getElementById("startButton").addEventListener(
         "click", create_proxy(visualisation.start)
+    )
+
+    document.getElementById("pauseButton").addEventListener(
+        "click", create_proxy(visualisation.pause_continue)
     )
 
     document.getElementById("stepBackwardButton").addEventListener(
