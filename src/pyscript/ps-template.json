@@ -2,6 +2,8 @@
     "files": {
         "../wasm-scripts/main.py": "../wasm-scripts/main.py",
         "../wasm-scripts/pyscript_ui_callbacks.py": "pyscript_ui_callbacks.py",
+        "../wasm-scripts/pyscript_from_worker.py": "pyscript_from_worker.py",
+        "../wasm-scripts/pyscript_to_worker.py": "pyscript_to_worker.py",
         "./{PKG}": "./{PKG}"
     },
     "packages": [
