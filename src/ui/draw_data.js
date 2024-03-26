@@ -390,12 +390,12 @@ function draw_visualisation(variables) {
     background("#EEEEEE");
     textAlign();
 
-
     stroke("black");
     strokeWeight(4);
     fill("white");
     textFont("15px Arial");
     textColor("black");
+
     //Zoom x 2 
     // strokeWeight(8);
     // textFont("15px Arial");
@@ -405,12 +405,9 @@ function draw_visualisation(variables) {
     // stack_rect_size.height *= 2;
     // stack_rect_size.width *= 2;
 
-
-
     variables = [set1, linkedList1, doubleLinkedList1, array1, stack1, queue1];
 
     for (let v of variables) {
-        console.log("draw_" + v.type + "(v.value);");
 
         resizeCanvas(width, offset.y + textSize());
         offset.x = 40;
@@ -418,7 +415,5 @@ function draw_visualisation(variables) {
         offset.x += textWidth(v.description.name) + margin;
 
         eval("draw_" + v.type + "(v.value);");
-        // eval("console.log(draw_" + v.type + "(v));")
-        // window["draw_" + v.type](v);
     }
 }
