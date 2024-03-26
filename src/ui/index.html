@@ -24,7 +24,7 @@
 
     <!-- Drawing library -->
     <script src="./primitives.js"></script>
-    <!-- <script src="src/ui/draw_data.js"></script> -->
+    <script src="./draw_data.js"></script>
 
     <!-- Python button calls -->
     <script src="ui_public_functions.js"></script>
@@ -73,9 +73,10 @@
 
     </script>
     <script>
-        let editor = document.getElementById("editor")
         createCanvas("canvasContainer", window.innerWidth * 3 / 5, window.innerHeight * 4 / 5, "canvas");
         background("#AAAAAA");
+        let transfertVars = [array1, linkedList1];
+        update_variables(transfertVars);
     </script>
 
     <!-- JavaScript button interactions -->

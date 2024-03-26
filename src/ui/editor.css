@@ -1,0 +1,91 @@
+#code-editor {
+    width: 100%;
+    height: calc(100vh - 50px);
+    border: none;
+    padding: 20px;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+#breakpoints,
+#indices,
+#code,
+#highlightedCode {
+    position: absolute;
+    width: 800px;
+    height: 600px;
+    margin: 0;
+    padding: 0;
+    /* border: none; */
+    font-family: monospace;
+    /* Ensure consistent font for both divs */
+    white-space: pre-wrap;
+    /* Preserve line breaks */
+}
+
+#indices {
+    left: 20px;
+}
+
+#code {
+    overflow: scroll;
+    left: 70px;
+    color: #fff;
+    caret-color: black;
+}
+
+#highlightedCode {
+    left: 70px;
+    pointer-events: none;
+    overflow: hidden;
+    /* Prevent the highlighted code from receiving focus or events */
+}
+
+#suggestions {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-top: none;
+    z-index: 100;
+    display: none;
+    font-family: monospace;
+}
+
+.breakpoint {
+    border: none;
+    margin-top: 3px;
+    margin-bottom: 6px;
+    margin-left: 10px;
+    padding: 0px;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+}
+
+.breakpoint.grey {
+    background-color: rgb(204, 204, 204);
+}
+
+.breakpoint.grey:hover {
+    background-color: #77dd77;
+}
+
+.breakpoint.green {
+    background-color: green;
+}
+
+.breakpoint.green:hover {
+    background-color: #ff6961;
+}
+
+.breakpoint.red {
+    background-color: red;
+}
+
+.breakpoint.red:hover {
+    background-color: #bb908d;
+}

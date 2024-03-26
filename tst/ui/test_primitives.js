@@ -1,5 +1,5 @@
 const { createCanvas } = require('canvas');
-const { ctx, contextCheck, resizeCanvas, isValidColor, stroke, noStroke, strokeWeight, fill, noFill, point, line, rect, square, circle, textAlign, textFont, text, background, int } = require("../../src/ui/primitives.js");
+const { ctx, contextCheck, resizeCanvas, isValidColor, stroke, noStroke, strokeWeight, fill, noFill, point, line, rect, square, circle, textAlign, textFont, textColor, textSize, textWidth, text, background, int } = require("../../src/ui/primitives.js");
 let { backgroundColor } = require("../../src/ui/primitives.js");
 
 
@@ -105,19 +105,6 @@ function strokeTest() {
 
 
 
-function intTest() {
-    // Negative number
-    test(int(-3.5) == -3);
-
-    // Positive number
-    test(int(8.1415) == 8);
-
-    // Zero
-    test(int(0) == 0);
-
-}
-
-
 function mainTest() {
 
     let testFunctions = [
@@ -136,9 +123,11 @@ function mainTest() {
         "circle",
         "textAlign",
         "textFont",
+        "textColor",
+        "textSize",
+        "textWidth",
         "text",
         "background",*/
-        intTest
     ];
 
     // Loop over every function and launch tests

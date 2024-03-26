@@ -54,10 +54,15 @@ if (typeof window !== 'undefined') {
         }
     });
 }
+let initial_width;
+let initial_height;
 
 
 // background color is used when the canvas is resized
 let backgroundColor = "#FFFFFF" // white
+
+// text color
+let textFillColor = "#000000" // black
 
 
 ///// Canvas Setup Functions /////
@@ -66,9 +71,9 @@ let backgroundColor = "#FFFFFF" // white
 /**
  * Create a canvas element and adds it inside another element
  * @param {string} place id of the element in which the canvas will be added
- * @param {string} name id of the canvas element
  * @param {number} width width of the canvas
  * @param {number} height height of the canvas
+ * @param {string} name id of the canvas element
  */
 
 function createCanvas(place, width, height, name) {
@@ -88,7 +93,8 @@ function createCanvas(place, width, height, name) {
     canvas.id = name;
     canvas.width = width;
     canvas.height = height;
-
+    initial_width = canvas.width;
+    initial_height = canvas.height;
     // Add canvas to html page
     canvasContainer.appendChild(canvas);
 
@@ -103,60 +109,63 @@ function createCanvas(place, width, height, name) {
  * @param {number} w new width
  * @param {number} h new height
  */
-function resizeCanvas(w = width, h = height) {
+function resizeCanvas(w = initial_width, h = initial_height) {
 
-    if (w != width || h != height) {
-        if (w < 0) {
-            throw new Error("Canvas width can not be set to negative value")
-        }
-        if (h < 0) {
-            throw new Error("Canvas height can not be set to negative value")
-        }
-
-        // Save all used context variables
-        let ctxData = ctx.get().getImageData(0, 0, width, height);
-        let ctxStrokeStyle = ctx.get().strokeStyle;
-        let ctxLineWidth = ctx.get().lineWidth;
-        let ctxFillStyle = ctx.get().fillStyle;
-        let ctxTextAlign = ctx.get().textAlign;
-        let ctxTextBaseline = ctx.get().textBaseline;
-        let ctxFont = ctx.get().font;
-
-
-        let lastWidth = width;
-        let lastHeight = height;
-
-        // Changing size reset all context attributes
-
-        ctx.get().canvas.width = w;
-        ctx.get().canvas.height = h;
-
-        // Restore all context variable
-        ctx.get().putImageData(ctxData, 0, 0);
-        ctx.get().strokeStyle = ctxStrokeStyle;
-        ctx.get().lineWidth = ctxLineWidth;
-        ctx.get().fillStyle = ctxFillStyle;
-        ctx.get().textAlign = ctxTextAlign;
-        ctx.get().textBaseline = ctxTextBaseline;
-        ctx.get().font = ctxFont;
-
-
-        // Fill new space with background color
-        fill(backgroundColor);
-
-
-        ctx.get().beginPath();
-        ctx.get().rect(lastWidth, 0, width - lastWidth, height);
-        ctx.get().fill();
-
-        ctx.get().beginPath();
-        ctx.get().rect(0, lastHeight, width, height - lastHeight);
-        ctx.get().fill();
-
-
-        fill(ctxFillStyle);
+    if (w < width) {
+        w = width;
     }
+    if (h < height) {
+        h = height;
+    } if (w == 0) {
+        w = initial_width;
+        h = initial_height;
+    }
+
+    // Save all used context variables
+    let ctxData = ctx.get().getImageData(0, 0, width, height);
+    let ctxStrokeStyle = ctx.get().strokeStyle;
+    let ctxLineWidth = ctx.get().lineWidth;
+    let ctxFillStyle = ctx.get().fillStyle;
+    let ctxTextAlign = ctx.get().textAlign;
+    let ctxTextBaseline = ctx.get().textBaseline;
+    let ctxFont = ctx.get().font;
+
+
+    let lastWidth = width;
+    let lastHeight = height;
+
+    // Changing size reset all context attributes
+
+    ctx.get().canvas.width = w;
+    ctx.get().canvas.height = h;
+
+    // Restore all context variable
+    ctx.get().putImageData(ctxData, 0, 0);
+    ctx.get().strokeStyle = ctxStrokeStyle;
+    ctx.get().lineWidth = ctxLineWidth;
+    ctx.get().fillStyle = ctxFillStyle;
+    ctx.get().textAlign = ctxTextAlign;
+    ctx.get().textBaseline = ctxTextBaseline;
+    ctx.get().font = ctxFont;
+
+
+    // Fill new space with background color
+    fill(backgroundColor);
+
+
+    ctx.get().beginPath();
+    ctx.get().rect(lastWidth, 0, width - lastWidth, height);
+    ctx.get().fill();
+
+    ctx.get().beginPath();
+    ctx.get().rect(0, lastHeight, width, height - lastHeight);
+    ctx.get().fill();
+
+
+    fill(ctxFillStyle);
+
 }
+
 
 ///// Parameter Modifiers /////
 
@@ -180,9 +189,7 @@ function stroke(color) {
     if (!isValidColor(color)) {
         throw new Error("Invalid fill color used");
     }
-
     ctx.get().strokeStyle = color;
-
 }
 
 /**
@@ -201,9 +208,7 @@ function strokeWeight(weight) {
     if (weight < 0) {
         throw new Error("Invalid stoke width value")
     }
-
     ctx.get().lineWidth = weight;
-
 }
 
 /**
@@ -214,9 +219,7 @@ function fill(color) {
     if (!isValidColor(color)) {
         throw new Error("Invalid fill color used");
     }
-
     ctx.get().fillStyle = color;
-
 }
 
 /**
@@ -349,13 +352,44 @@ function textFont(font) {
 }
 
 /**
+ * Change text color
+ * @param {*} color 
+ */
+function textColor(color) {
+    if (!isValidColor(color)) {
+        throw new Error("Invalid text fill color used");
+    }
+    textFillColor = color;
+}
+
+/**
+ * 
+ * @returns The current font size
+ */
+function textSize() {
+    return parseInt(ctx.get().font.match(/\d+px/)[0].replace("px", ""));
+}
+
+/**
+ * 
+ * @param {*} str 
+ * @returns Width taken by the string str in the canvas
+ */
+function textWidth(str) {
+    return ctx.get().measureText(str).width;
+}
+
+/**
  * Draw text at (x, y), color can be changed with fill()
  * @param {string} txt 
  * @param {number} x 
  * @param {number} y 
  */
 function text(txt, x, y) {
+    const tmp = ctx.get().fillStyle
+    ctx.get().fillStyle = textFillColor;
     ctx.get().fillText(txt, x, y);
+    ctx.get().fillStyle = tmp;
 }
 
 
@@ -368,14 +402,14 @@ function text(txt, x, y) {
  */
 function background(color) {
     if (!isValidColor(color)) {
-        throw new Error("Invalid fill color used");
+        throw new Error("Invalid background fill color used");
     }
 
     backgroundColor = color;
 
     // Save current color
 
-    let tmp = ctx.get().fillStyle
+    const tmp = ctx.get().fillStyle
     ctx.get().fillStyle = color;
 
     // Draw a filled rectangle the size of the canvas
@@ -388,21 +422,7 @@ function background(color) {
 
 }
 
-/**
- * Return integer value of x
- * @param {number} x 
- * @returns 
- */
-function int(x) {
-    if (x >= 0) {
-        return Math.floor(x);
-    }
-    else {
-        return Math.floor(x + 1);
-    }
-}
-
 if (typeof window === 'undefined') {
-    module.exports = { ctx, backgroundColor, createCanvas, resizeCanvas, isValidColor, stroke, noStroke, strokeWeight, fill, noFill, point, line, rect, square, circle, textAlign, textFont, text, background, int };
+    module.exports = { ctx, backgroundColor, createCanvas, resizeCanvas, isValidColor, stroke, noStroke, strokeWeight, fill, noFill, point, line, rect, square, circle, textAlign, textFont, textColor, textSize, textWidth, text, background };
 }
 
