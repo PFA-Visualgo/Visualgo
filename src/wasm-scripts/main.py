@@ -12,11 +12,11 @@ class Visualisation:
         self.controller = Controller(PyDebugger, PyscriptUICallbacks())
         self.code = "print('Hello, World!')"
 
-    def start(self, _):
-        self.controller.start()
+    async def start(self, _):
+        await self.controller.start()
 
-    def pause_continue(self, _):
-        self.controller.pause_continue()
+    async def pause_continue(self, _):
+        await self.controller.pause_continue()
 
     def forward_step(self, _):
         self.controller.forward_step()
