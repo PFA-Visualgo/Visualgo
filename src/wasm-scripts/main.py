@@ -1,7 +1,7 @@
 from pyscript import document
 from pyodide.ffi import create_proxy
 
-from visualgo.logic import Controller, PyDebugger
+from visualgo.logic import Controller, PyAbstractDebugger
 
 from pyscript_ui_callbacks import PyscriptUICallbacks
 
@@ -9,7 +9,7 @@ from pyscript_ui_callbacks import PyscriptUICallbacks
 class Visualisation:
 
     def __init__(self):
-        self.controller = Controller(PyDebugger, PyscriptUICallbacks())
+        self.controller = Controller(PyAbstractDebugger, PyscriptUICallbacks())
         self.code = "print('Hello, World!')"
 
     async def start(self, _):
