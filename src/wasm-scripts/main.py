@@ -2,6 +2,8 @@ from pyscript import document
 from pyodide.ffi import create_proxy
 
 from visualgo.logic import Controller, PyAbstractDebugger
+from visualgo.structures import LinkedList
+
 
 from pyscript_ui_callbacks import PyscriptUICallbacks
 import pyscript_to_worker
@@ -60,3 +62,10 @@ if __name__ == "__main__":
     document.getElementById("nextForwardButton").addEventListener(
         "click", create_proxy(visualisation.forward_next)
     )
+
+    callbacks = PyscriptUICallbacks()
+
+    l = LinkedList([1,2,3])
+    variables = [l]
+
+    callbacks.update_variables(variables)

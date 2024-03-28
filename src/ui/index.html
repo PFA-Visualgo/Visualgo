@@ -32,6 +32,10 @@
     <!-- Python button calls -->
     <script src="ui_public_functions.js"></script>
 
+    <!-- Editor -->
+    <link rel="stylesheet" href="editor.css">
+    <script src="editor.js"></script>
+
 </head>
 
 <body>
@@ -57,8 +61,16 @@
     </header>
 
     <div id="main" style="display:flex;flex-direction: row; border:1px solid grey; height: 80vh;">
-        <div id="codeContainer" style="width:40vw;">
-            <textarea id="editor" style="width: 100%; height: 100%;resize: none; padding: 0px; border: 0px;"></textarea>
+        <div id="codeContainer" style="width:850px;height:600px;border:1px solid grey; display: flex;">
+
+            <div id="breakpointContainer" style="width:20px;overflow:hidden;resize: none; border: none; outline: none;">
+            </div>
+            <div id="indices" style="width:50px;overflow:hidden;resize: none; border: none; outline: none;"></div>
+            <div id="code" contenteditable="true" spellcheck="false"></div>
+            <div id="highlightedCode" spellcheck="false"></div>
+            <div id="suggestions"></div>
+
+
         </div>
         <div id="canvasContainer" style="overflow: auto;"></div>
     </div>
@@ -78,12 +90,15 @@
     <script>
         createCanvas("canvasContainer", window.innerWidth * 3 / 5, window.innerHeight * 4 / 5, "canvas");
         background("#AAAAAA");
-        let transfertVars = [array1, linkedList1];
-        update_variables(transfertVars);
+        ///let transfertVars = [array1, linkedList1];
+        //update_variables(transfertVars);
     </script>
 
     <!-- JavaScript button interactions -->
     <script src="button.js"></script>
+    <script>
+        initEditor();
+    </script>
 
     <!-- Pyscript button interactions-->
     <py-env>
