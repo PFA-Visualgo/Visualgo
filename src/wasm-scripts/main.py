@@ -2,7 +2,8 @@ from pyscript import document
 from pyodide.ffi import create_proxy
 
 from visualgo.logic import Controller, PyDebugger
-# import visualgo as vs
+from visualgo.structures import LinkedList
+
 
 from pyscript_ui_callbacks import PyscriptUICallbacks
 
@@ -60,9 +61,9 @@ if __name__ == "__main__":
         "click", create_proxy(visualisation.forward_next)
     )
 
-    # callbacks = PyscriptUICallbacks()
-    # print(vs)
-    #l = List([1,2,3])
-    # variables = [l]
+    callbacks = PyscriptUICallbacks()
+    
+    l = LinkedList([1,2,3])
+    variables = [l]
 
-    # callbacks.update_variables(variables)
+    callbacks.update_variables(variables)
