@@ -35,7 +35,7 @@ dependencies:
 	pip install wheel
 
 # Install dependencies from requirements.txt
-build: update-submodules check-venv dependencies
+build: check-venv dependencies update-submodules # WARNING comment `update-submodules` if you are working on the submodule from the main project
 	@echo "$(BOLD)$(GREEN)>> Building the visualgo wheel <<$(RESET)"
 	./scripts/build.sh 
 
