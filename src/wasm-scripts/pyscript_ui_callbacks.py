@@ -27,4 +27,3 @@ class PyscriptUICallbacks(UICallbacksInterface):
 
     def set_current_line(self, line_number: int) -> None:
         set_current_line(line_number)
-
