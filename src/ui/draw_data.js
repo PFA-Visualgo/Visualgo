@@ -396,16 +396,17 @@ function draw_visualisation(variables) {
     textFont("15px Arial");
     textColor("black");
 
-    //Zoom x 2 
-    // strokeWeight(8);
-    // textFont("15px Arial");
-    // margin *= 2;
-    // rect_size.height *= 2;
-    // rect_size.width *= 2;
-    // stack_rect_size.height *= 2;
-    // stack_rect_size.width *= 2;
+    // Zoom x 2 
+    /*
+    strokeWeight(8);
+    textFont("30px Arial");
+    margin *= 2;
+    rect_size.height *= 2;
+    rect_size.width *= 2;
+    stack_rect_size.height *= 2;
+    stack_rect_size.width *= 2;*/
 
-    variables = [set1, linkedList1, doubleLinkedList1, array1, stack1, queue1];
+    //variables = [set1, linkedList1, doubleLinkedList1, array1, stack1, queue1];
 
     for (let v of variables) {
 
