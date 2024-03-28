@@ -9,6 +9,9 @@
 
     <title>Visualgo</title>
 
+    <!-- Allow usage of SharedArrayBuffer -->
+    <script src="../mini-coi.js" scope="./"></script>
+
     <!-- PyScript CSS -->
     <link rel="stylesheet" href="https://pyscript.net/releases/2024.2.1/core.css">
 
@@ -85,7 +88,7 @@
     <!-- Pyscript button interactions-->
     <py-env>
         <script type="py" src="../wasm-scripts/main.py" config="../pyscript/pyscript.json"></script>
-        <script type="pyodide" id="worker" src="../wasm-scripts/worker.py" config="../pyscript/pyscript.json"
+        <script type="py" id="worker" src="../wasm-scripts/bdb_worker.py" config="../pyscript/pyscript.json"
             worker></script>
     </py-env>
 

@@ -4,6 +4,7 @@ from pyodide.ffi import create_proxy
 from visualgo.logic import Controller, PyAbstractDebugger
 
 from pyscript_ui_callbacks import PyscriptUICallbacks
+import pyscript_to_worker
 
 
 class Visualisation:
@@ -32,6 +33,7 @@ class Visualisation:
 
 
 if __name__ == "__main__":
+    pyscript_to_worker.set_implementation()
     visualisation = Visualisation()
     print("__main__")
 
